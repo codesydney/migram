@@ -45,7 +45,7 @@ def render_header():
     """Render the consistent header across pages."""
     return Div(
         H1("Migram", _style="text-align: center; margin-bottom: 10px; font-size: 3rem;"),
-        H3("Empowering refugees to thrive and build inclusive communities.", _style="text-align: center; margin-bottom: 10px;"),
+        P("Empowering migrants of refugee background to thrive and build inclusive communities.", _style="text-align: center; margin-bottom: 10px;"),
         Div(
             A(
                 Img(src="/img/imslogo.png", alt="IMS Logo", _style="width: 300px; margin-bottom: 10px;"),
