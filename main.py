@@ -44,7 +44,15 @@ def render_footer():
 def render_header():
     """Render the consistent header across pages."""
     return Div(
-        H1("Migram", _style="text-align: center; margin-bottom: 10px; font-size: 3rem;"),
+        Div(
+            A(
+                Img(src="/img/migramlogo.png", alt="IMS Logo", _style="width: 225px; margin-bottom: 10px;"),
+                _style="text-align: center;",
+                href="https://www.migram.au",
+                target="_blank"
+            )
+        ),        
+        #H1("MIGRAM", _style="text-align: center; margin-bottom: 10px; font-size: 3rem;"),
         P("Empowering migrants of refugee background to thrive and build inclusive communities.", _style="text-align: center; margin-bottom: 10px;"),
         Div(
             A(
