@@ -1,5 +1,14 @@
 from fasthtml.common import A, Div, H3, Img, P, Style
 
+def generate_my_story_link(story_link, margin_top="0"):
+    """Generate a 'My Story' link that redirects to a new page."""
+    return A(
+        "My Story",
+        href=story_link,
+        _class="my-story-link",
+        style=f"margin-top: {margin_top}; display: block; text-align: center;",
+    )
+
 def generate_linkedin_link(linkedin_link, margin_top="0"):
     """Generate LinkedIn link with an icon."""
     return A(
@@ -45,19 +54,13 @@ def card_3d(
 ):
     """Generate a 3D card component with mentor or portfolio details."""
     card_body = [
-        H3(line1, _class="card-title"),
-        P(line2, _class="card-description"),
-        P(line3, _class="card-description-small"),
+        H3(line1, _class="card-title"),  # Mentor name
+        P(line2, _class="card-description"),  # Mentor role/description
+        A("My Story", href=link, _class="my-story-link", _style="margin: 10px 0; text-align: center; display: block;"),
+        #P(line3, _class="card-description-small"),  # Additional details
     ]
     if show_booking and not is_portfolio:
-        # Add the booking button with dynamic margin
         card_body.append(generate_booking_button(booking_link, margin_bottom=button_margin_bottom))
-    
-    if is_portfolio:
-        card_body.append(generate_portfolio_link(link, icon_size))
-    else:
-        # Pass space_between_button_and_icon as the margin_top for LinkedIn
-        card_body.append(generate_linkedin_link(link, margin_top=space_between_button_and_icon))
 
     return Div(
         Div(
@@ -85,15 +88,15 @@ def card_3d(
 MENTOR_CARDS = [
     card_3d(
         "Mentor 1 | ",
-        "img/DM-Engramar.png",
-        "Engramar Bollas",
-        "Basic Python Mentor ($0 per hour)",
-        "Guidance on Python for Everybody Course by Prof. Charles Severance",
-        "https://linkedin.com/in/engramarbollas",
+        "img/Farhan.png",
+        "Farhan Akhlaqi",
+        "Painting Services | ABN 94501731662",  # Mentor role/description
+        "",  # Additional info
+        "/my-story-farhan",  # My Story link
         show_booking=True,
-        booking_link="https://koalendar.com/e/meet-with-code-sydney",
-        button_margin_bottom="1px",  # Space below the button
-        space_between_button_and_icon="1px"  # Reduced space between button and LinkedIn icon
+        booking_link="https://ims.org.au/contact-us/",
+        button_margin_bottom="1px", 
+        space_between_button_and_icon="1px"
     )
 ]
 
