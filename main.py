@@ -2,6 +2,8 @@ from fasthtml.common import *
 from fastapi.staticfiles import StaticFiles
 from styles import styles
 from cards import MENTOR_CARDS, STORIES  # Import STORIES from cards.py
+from starlette.responses import HTMLResponse
+
 
 app, rt = fast_app()
 
@@ -139,48 +141,40 @@ def get(req):
     )
 
 @rt("/story/{story_id}")
-def dynamic_story(req, story_id: str):  # Add a type annotation for story_id
-    print(f"Request path: {req.url.path}")
-    print(f"story_id received: '{story_id}'")
+def dynamic_story(req, story_id: str):
     story = STORIES.get(story_id)
-    print(f"STORIES.get(story_id): {story}")
+
     if not story:
-        return Html(
-            render_head("Story Not Found"),
-            render_page(
-                Div(
-                    H2("404 - Story Not Found", _style="text-align: center; margin-bottom: 20px;"),
-                    P(
-                        "The story you are looking for does not exist.",
-                        _style="text-align: center; margin: 20px;"
-                    ),
-                    A(
-                        "Back to Home",
-                        href="/",
-                        _style="display: block; text-align: center; margin-top: 20px; color: blue; text-decoration: underline;"
-                    )
-                )
-            ),
-            render_footer()
+        return HTMLResponse(
+            content="""
+            <html>
+                <head><title>Story Not Found</title></head>
+                <body>
+                    <h3 style="text-align: center; margin-bottom: 20px;">404 - Story Not Found</h3>
+                    <p style="text-align: justify; margin: 20px;">The story you are looking for does not exist.</p>
+                    <a href="/" style="display: block; text-align: center; margin-top: 20px; color: blue; text-decoration: underline;">Back to Home</a>
+                </body>
+            </html>
+            """,
+            status_code=404
         )
 
-    return Html(
-        render_head(story["title"]),
-        render_navbar(),
-        render_page(
-            Div(
-                H2(story["title"], _style="text-align: center; margin-bottom: 20px;"),
-                Div(story["content"], _style="text-align: justify; margin: 20px;"),
-                A(
-                    "Back to Home",
-                    href="/",
-                    _style="display: block; text-align: center; margin-top: 20px; color: blue; text-decoration: underline;"
-                )
-            )
-        ),
-        render_footer()
+    return HTMLResponse(
+        content=f"""
+        <html>
+            <head><title>{story["title"]}</title></head>
+            <body>
+                <h3 style="text-align: center; margin-bottom: 20px;">{story["title"]}</h3>
+                <div style="text-align: justify; margin: 20px;">
+                    {story["content"]}
+                </div>
+                <a href="/" style="display: block; text-align: center; margin-top: 20px; color: blue; text-decoration: underline;">Back to Home</a>
+            </body>
+        </html>
+        """,
+        status_code=200
     )
-
+    
 @rt("/about")
 def about(req):
     return Html(

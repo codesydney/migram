@@ -91,6 +91,18 @@ styles = Style("""
         font-size: 16px;
         cursor: pointer;
     }
+
+    /* Style specifically for <br> */
+    br {
+        display: block; /* Ensure line breaks are rendered */
+        line-height: 2; /* Increase spacing after line breaks */
+    }
+
+    .story-content p {
+        line-height: 1.8 !important;
+        margin-bottom: 15px !important;
+    }
+
     body, html {
         overflow-x: hidden;
     }
